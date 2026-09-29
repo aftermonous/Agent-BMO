@@ -21,7 +21,7 @@
 
 <br>
 
-<img src="assets/agentbmo.png" align="right" width="200" alt="Agent BMO">
+<img src="agentbmo.png" align="right" width="200" alt="Agent BMO">
 
 ### BMO is the trader.
 
