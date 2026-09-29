@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 668" width="880" height="668" role="img" aria-labelledby="ttl dsc">
+<title id="ttl">Agent BMO trading loop</title>
+<desc id="dsc">A nine state machine: scan, filter, analyze, decide, validate, execute, manage, exit, repeat. A sweep and a packet travel the ring. Filter, decide and validate can drop, pass or veto.</desc>
+<style>
+text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono','DejaVu Sans Mono',monospace;}
+.b{font-weight:700}
+.blink{animation:blink 1.1s steps(1) infinite}
+.blinkslow{animation:blink 2.4s steps(1) infinite}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes blink{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+@media (prefers-reduced-motion: reduce){.blink,.blinkslow,.pulse{animation:none}}
+
+.spin{transform-origin:440px 336px;animation:spin 60s linear infinite}
+.spinr{transform-origin:440px 336px;animation:spin 90s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+</style><defs>
+<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+  <feGaussianBlur stdDeviation="2.2" result="b"/>
+  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="glowsoft" x="-10%" y="-40%" width="120%" height="180%">
+  <feGaussianBlur stdDeviation="1.1" result="b"/>
+  <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="glowbig" x="-30%" y="-30%" width="160%" height="160%">
+  <feGaussianBlur stdDeviation="5" result="b"/>
+  <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+  <rect width="4" height="1" fill="#000" opacity=".38"/>
+</pattern>
+<pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+  <rect x="9.5" y="9.5" width="1" height="1" fill="#0b3a21"/>
+</pattern>
+<radialGradient id="vig" cx="50%" cy="50%" r="75%">
+  <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+  <stop offset="100%" stop-color="#000" stop-opacity=".75"/>
+</radialGradient>
+<linearGradient id="roll" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#3dff8c" stop-opacity="0"/>
+  <stop offset=".85" stop-color="#3dff8c" stop-opacity=".06"/>
+  <stop offset="1" stop-color="#3dff8c" stop-opacity="0"/>
+</linearGradient>
+<marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#22b863"/>
+</marker>
+<marker id="arrA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#ffb000"/>
+</marker>
+<marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+  <path d="M0,0 L10,5 L0,10 z" fill="#ff4d4d"/>
+</marker>
+
+</defs>
+<rect width="880" height="668" rx="14" fill="#000000"/>
+<rect width="880" height="668" rx="14" fill="url(#dots)"/>
+<line x1="24" y1="40" x2="856" y2="40" stroke="#0b3a21"/>
+<text x="24" y="30" font-size="11" fill="#22b863" letter-spacing="2">AGENT BMO / CORE LOOP</text>
+<text x="856" y="30" font-size="11" fill="#136b3a" text-anchor="end" letter-spacing="2">STATE MACHINE. NOT RUNNING YET</text>
+<g class="spin" stroke="#136b3a" stroke-width="1"><line x1="692.0" y1="336.0" x2="710.0" y2="336.0"/><line x1="701.6" y1="349.7" x2="709.6" y2="350.1"/><line x1="700.6" y1="363.4" x2="708.5" y2="364.2"/><line x1="698.8" y1="377.0" x2="706.7" y2="378.2"/><line x1="696.3" y1="390.5" x2="704.1" y2="392.1"/><line x1="693.1" y1="403.8" x2="700.8" y2="405.9"/><line x1="689.2" y1="417.0" x2="696.8" y2="419.4"/><line x1="684.6" y1="429.9" x2="692.1" y2="432.8"/><line x1="679.3" y1="442.6" x2="686.7" y2="445.8"/><line x1="673.4" y1="454.9" x2="680.6" y2="458.6"/><line x1="658.2" y1="462.0" x2="673.8" y2="471.0"/><line x1="659.7" y1="478.7" x2="666.4" y2="483.1"/><line x1="652.0" y1="490.0" x2="658.4" y2="494.7"/><line x1="643.6" y1="500.9" x2="649.8" y2="505.9"/><line x1="634.7" y1="511.3" x2="640.6" y2="516.7"/><line x1="625.3" y1="521.3" x2="630.9" y2="526.9"/><line x1="615.3" y1="530.7" x2="620.7" y2="536.6"/><line x1="604.9" y1="539.6" x2="609.9" y2="545.8"/><line x1="594.0" y1="548.0" x2="598.7" y2="554.4"/><line x1="582.7" y1="555.7" x2="587.1" y2="562.4"/><line x1="566.0" y1="554.2" x2="575.0" y2="569.8"/><line x1="558.9" y1="569.4" x2="562.6" y2="576.6"/><line x1="546.6" y1="575.3" x2="549.8" y2="582.7"/><line x1="533.9" y1="580.6" x2="536.8" y2="588.1"/><line x1="521.0" y1="585.2" x2="523.4" y2="592.8"/><line x1="507.8" y1="589.1" x2="509.9" y2="596.8"/><line x1="494.5" y1="592.3" x2="496.1" y2="600.1"/><line x1="481.0" y1="594.8" x2="482.2" y2="602.7"/><line x1="467.4" y1="596.6" x2="468.2" y2="604.5"/><line x1="453.7" y1="597.6" x2="454.1" y2="605.6"/><line x1="440.0" y1="588.0" x2="440.0" y2="606.0"/><line x1="426.3" y1="597.6" x2="425.9" y2="605.6"/><line x1="412.6" y1="596.6" x2="411.8" y2="604.5"/><line x1="399.0" y1="594.8" x2="397.8" y2="602.7"/><line x1="385.5" y1="592.3" x2="383.9" y2="600.1"/><line x1="372.2" y1="589.1" x2="370.1" y2="596.8"/><line x1="359.0" y1="585.2" x2="356.6" y2="592.8"/><line x1="346.1" y1="580.6" x2="343.2" y2="588.1"/><line x1="333.4" y1="575.3" x2="330.2" y2="582.7"/><line x1="321.1" y1="569.4" x2="317.4" y2="576.6"/><line x1="314.0" y1="554.2" x2="305.0" y2="569.8"/><line x1="297.3" y1="555.7" x2="292.9" y2="562.4"/><line x1="286.0" y1="548.0" x2="281.3" y2="554.4"/><line x1="275.1" y1="539.6" x2="270.1" y2="545.8"/><line x1="264.7" y1="530.7" x2="259.3" y2="536.6"/><line x1="254.7" y1="521.3" x2="249.1" y2="526.9"/><line x1="245.3" y1="511.3" x2="239.4" y2="516.7"/><line x1="236.4" y1="500.9" x2="230.2" y2="505.9"/><line x1="228.0" y1="490.0" x2="221.6" y2="494.7"/><line x1="220.3" y1="478.7" x2="213.6" y2="483.1"/><line x1="221.8" y1="462.0" x2="206.2" y2="471.0"/><line x1="206.6" y1="454.9" x2="199.4" y2="458.6"/><line x1="200.7" y1="442.6" x2="193.3" y2="445.8"/><line x1="195.4" y1="429.9" x2="187.9" y2="432.8"/><line x1="190.8" y1="417.0" x2="183.2" y2="419.4"/><line x1="186.9" y1="403.8" x2="179.2" y2="405.9"/><line x1="183.7" y1="390.5" x2="175.9" y2="392.1"/><line x1="181.2" y1="377.0" x2="173.3" y2="378.2"/><line x1="179.4" y1="363.4" x2="171.5" y2="364.2"/><line x1="178.4" y1="349.7" x2="170.4" y2="350.1"/><line x1="188.0" y1="336.0" x2="170.0" y2="336.0"/><line x1="178.4" y1="322.3" x2="170.4" y2="321.9"/><line x1="179.4" y1="308.6" x2="171.5" y2="307.8"/><line x1="181.2" y1="295.0" x2="173.3" y2="293.8"/><line x1="183.7" y1="281.5" x2="175.9" y2="279.9"/><line x1="186.9" y1="268.2" x2="179.2" y2="266.1"/><line x1="190.8" y1="255.0" x2="183.2" y2="252.6"/><line x1="195.4" y1="242.1" x2="187.9" y2="239.2"/><line x1="200.7" y1="229.4" x2="193.3" y2="226.2"/><line x1="206.6" y1="217.1" x2="199.4" y2="213.4"/><line x1="221.8" y1="210.0" x2="206.2" y2="201.0"/><line x1="220.3" y1="193.3" x2="213.6" y2="188.9"/><line x1="228.0" y1="182.0" x2="221.6" y2="177.3"/><line x1="236.4" y1="171.1" x2="230.2" y2="166.1"/><line x1="245.3" y1="160.7" x2="239.4" y2="155.3"/><line x1="254.7" y1="150.7" x2="249.1" y2="145.1"/><line x1="264.7" y1="141.3" x2="259.3" y2="135.4"/><line x1="275.1" y1="132.4" x2="270.1" y2="126.2"/><line x1="286.0" y1="124.0" x2="281.3" y2="117.6"/><line x1="297.3" y1="116.3" x2="292.9" y2="109.6"/><line x1="314.0" y1="117.8" x2="305.0" y2="102.2"/><line x1="321.1" y1="102.6" x2="317.4" y2="95.4"/><line x1="333.4" y1="96.7" x2="330.2" y2="89.3"/><line x1="346.1" y1="91.4" x2="343.2" y2="83.9"/><line x1="359.0" y1="86.8" x2="356.6" y2="79.2"/><line x1="372.2" y1="82.9" x2="370.1" y2="75.2"/><line x1="385.5" y1="79.7" x2="383.9" y2="71.9"/><line x1="399.0" y1="77.2" x2="397.8" y2="69.3"/><line x1="412.6" y1="75.4" x2="411.8" y2="67.5"/><line x1="426.3" y1="74.4" x2="425.9" y2="66.4"/><line x1="440.0" y1="84.0" x2="440.0" y2="66.0"/><line x1="453.7" y1="74.4" x2="454.1" y2="66.4"/><line x1="467.4" y1="75.4" x2="468.2" y2="67.5"/><line x1="481.0" y1="77.2" x2="482.2" y2="69.3"/><line x1="494.5" y1="79.7" x2="496.1" y2="71.9"/><line x1="507.8" y1="82.9" x2="509.9" y2="75.2"/><line x1="521.0" y1="86.8" x2="523.4" y2="79.2"/><line x1="533.9" y1="91.4" x2="536.8" y2="83.9"/><line x1="546.6" y1="96.7" x2="549.8" y2="89.3"/><line x1="558.9" y1="102.6" x2="562.6" y2="95.4"/><line x1="566.0" y1="117.8" x2="575.0" y2="102.2"/><line x1="582.7" y1="116.3" x2="587.1" y2="109.6"/><line x1="594.0" y1="124.0" x2="598.7" y2="117.6"/><line x1="604.9" y1="132.4" x2="609.9" y2="126.2"/><line x1="615.3" y1="141.3" x2="620.7" y2="135.4"/><line x1="625.3" y1="150.7" x2="630.9" y2="145.1"/><line x1="634.7" y1="160.7" x2="640.6" y2="155.3"/><line x1="643.6" y1="171.1" x2="649.8" y2="166.1"/><line x1="652.0" y1="182.0" x2="658.4" y2="177.3"/><line x1="659.7" y1="193.3" x2="666.4" y2="188.9"/><line x1="658.2" y1="210.0" x2="673.8" y2="201.0"/><line x1="673.4" y1="217.1" x2="680.6" y2="213.4"/><line x1="679.3" y1="229.4" x2="686.7" y2="226.2"/><line x1="684.6" y1="242.1" x2="692.1" y2="239.2"/><line x1="689.2" y1="255.0" x2="696.8" y2="252.6"/><line x1="693.1" y1="268.2" x2="700.8" y2="266.1"/><line x1="696.3" y1="281.5" x2="704.1" y2="279.9"/><line x1="698.8" y1="295.0" x2="706.7" y2="293.8"/><line x1="700.6" y1="308.6" x2="708.5" y2="307.8"/><line x1="701.6" y1="322.3" x2="709.6" y2="321.9"/></g>
+<circle cx="440" cy="336" r="244" fill="none" stroke="#0b3a21" stroke-dasharray="1 5" class="spinr"/>
+<g><path d="M440,336 L440.0,124.0 A212,212 0 0 0 421.5,124.8 Z" fill="#3dff8c" opacity="0.300"/><path d="M440,336 L421.5,124.8 A212,212 0 0 0 403.2,127.2 Z" fill="#3dff8c" opacity="0.270"/><path d="M440,336 L403.2,127.2 A212,212 0 0 0 385.1,131.2 Z" fill="#3dff8c" opacity="0.240"/><path d="M440,336 L385.1,131.2 A212,212 0 0 0 367.5,136.8 Z" fill="#3dff8c" opacity="0.210"/><path d="M440,336 L367.5,136.8 A212,212 0 0 0 350.4,143.9 Z" fill="#3dff8c" opacity="0.180"/><path d="M440,336 L350.4,143.9 A212,212 0 0 0 334.0,152.4 Z" fill="#3dff8c" opacity="0.150"/><path d="M440,336 L334.0,152.4 A212,212 0 0 0 318.4,162.3 Z" fill="#3dff8c" opacity="0.120"/><path d="M440,336 L318.4,162.3 A212,212 0 0 0 303.7,173.6 Z" fill="#3dff8c" opacity="0.090"/><path d="M440,336 L303.7,173.6 A212,212 0 0 0 290.1,186.1 Z" fill="#3dff8c" opacity="0.060"/><path d="M440,336 L290.1,186.1 A212,212 0 0 0 277.6,199.7 Z" fill="#3dff8c" opacity="0.030"/><line x1="440" y1="336" x2="440" y2="124" stroke="#3dff8c" stroke-width="1.5" opacity=".8"/><animateTransform attributeName="transform" type="rotate" from="0 440 336" to="360 440 336" dur="13.5s" repeatCount="indefinite"/></g>
+<circle cx="440" cy="336" r="212" fill="none" stroke="#136b3a" stroke-width="2"/>
+<path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(512.5,136.8) rotate(20.0)"/><path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(623.6,230.0) rotate(60.0)"/><path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(648.8,372.8) rotate(100.0)"/><path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(576.3,498.4) rotate(140.0)"/><path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(440.0,548.0) rotate(180.0)"/><path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(303.7,498.4) rotate(220.0)"/><path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(231.2,372.8) rotate(260.0)"/><path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(256.4,230.0) rotate(300.0)"/><path d="M-5,-6 L3,0 L-5,6" fill="none" stroke="#22b863" stroke-width="1.8" transform="translate(367.5,136.8) rotate(340.0)"/>
+<line x1="600.7" y1="144.5" x2="618.7" y2="123.0" stroke="#136b3a" stroke-dasharray="3 3" marker-end="url(#arr)"/><text x="628.9795572478425" y="114.78293372302048" font-size="11" fill="#22b863" letter-spacing="2">drop</text>
+<line x1="656.5" y1="461.0" x2="680.8" y2="475.0" stroke="#136b3a" stroke-dasharray="3 3" marker-end="url(#arr)"/><text x="694.611468712625" y="487.0" font-size="11" fill="#22b863" letter-spacing="2">pass</text>
+<line x1="525.5" y1="570.9" x2="535.1" y2="597.2" stroke="#ff4d4d" stroke-dasharray="3 3" marker-end="url(#arrR)"/><text x="540.5539221377467" y="616.2696305110571" font-size="11" fill="#ff4d4d" letter-spacing="2">veto</text>
+
+<circle cx="440" cy="336" r="128" fill="#000000" stroke="#0b3a21"/>
+<circle cx="440" cy="336" r="120" fill="none" stroke="#0b3a21" stroke-dasharray="2 3"/>
+<text x="440" y="284" font-size="10" fill="#136b3a" text-anchor="middle" letter-spacing="3">CURRENT STATE</text>
+<g><circle cx="440.0" cy="124.0" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="440.0" cy="124.0" r="38" fill="#3dff8c" opacity=".16"/><circle cx="440.0" cy="124.0" r="38" fill="none" stroke="#3dff8c" stroke-width="2.5" filter="url(#glow)"/><circle cx="440.0" cy="124.0" r="46" fill="none" stroke="#3dff8c" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="1;0;1" keyTimes="0.00000;0.05556;0.94444" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="440.0" y="119.5" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">00</text>
+<text x="440.0" y="136.0" font-size="12" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">SCAN</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#3dff8c" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">SCAN</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">read new pools and price moves</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">01 / 09</text>
+<animate attributeName="opacity" values="1;0;1" keyTimes="0.00000;0.05556;0.94444" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<g><circle cx="576.3" cy="173.6" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="576.3" cy="173.6" r="38" fill="#3dff8c" opacity=".16"/><circle cx="576.3" cy="173.6" r="38" fill="none" stroke="#3dff8c" stroke-width="2.5" filter="url(#glow)"/><circle cx="576.3" cy="173.6" r="46" fill="none" stroke="#3dff8c" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.05556;0.16667" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="576.2709732535463" y="169.09857805877667" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">01</text>
+<text x="576.2709732535463" y="185.59857805877667" font-size="12" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">FILTER</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#3dff8c" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">FILTER</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">drop tokens that fail hard rules</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">02 / 09</text>
+<animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.05556;0.16667" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<g><circle cx="648.8" cy="299.2" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="648.8" cy="299.2" r="38" fill="#3dff8c" opacity=".16"/><circle cx="648.8" cy="299.2" r="38" fill="none" stroke="#3dff8c" stroke-width="2.5" filter="url(#glow)"/><circle cx="648.8" cy="299.2" r="46" fill="none" stroke="#3dff8c" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.16667;0.27778" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="648.7792436385881" y="294.68658633461075" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">02</text>
+<text x="648.7792436385881" y="311.18658633461075" font-size="12" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">ANALYZE</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#3dff8c" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">ANALYZE</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">score survivors against strategy</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">03 / 09</text>
+<animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.16667;0.27778" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<g><circle cx="623.6" cy="442.0" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="623.6" cy="442.0" r="38" fill="#3dff8c" opacity=".16"/><circle cx="623.6" cy="442.0" r="38" fill="none" stroke="#3dff8c" stroke-width="2.5" filter="url(#glow)"/><circle cx="623.6" cy="442.0" r="46" fill="none" stroke="#3dff8c" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.27778;0.38889" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="623.5973856023011" y="437.5" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">03</text>
+<text x="623.5973856023011" y="454.0" font-size="12" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">DECIDE</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#3dff8c" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">DECIDE</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">act or pass. reason is logged</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">04 / 09</text>
+<animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.27778;0.38889" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<g><circle cx="512.5" cy="535.2" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="512.5" cy="535.2" r="38" fill="#ffb000" opacity=".16"/><circle cx="512.5" cy="535.2" r="38" fill="none" stroke="#ffb000" stroke-width="2.5" filter="url(#glow)"/><circle cx="512.5" cy="535.2" r="46" fill="none" stroke="#ffb000" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.38889;0.50000" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="512.5082703850418" y="530.7148356066125" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">04</text>
+<text x="512.5082703850418" y="547.2148356066125" font-size="11" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">VALIDATE</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#ffb000" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">VALIDATE</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">risk limits. simulate the tx</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">05 / 09</text>
+<animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.38889;0.50000" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<g><circle cx="367.5" cy="535.2" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="367.5" cy="535.2" r="38" fill="#4fe3c9" opacity=".16"/><circle cx="367.5" cy="535.2" r="38" fill="none" stroke="#4fe3c9" stroke-width="2.5" filter="url(#glow)"/><circle cx="367.5" cy="535.2" r="46" fill="none" stroke="#4fe3c9" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.50000;0.61111" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="367.4917296149582" y="530.7148356066126" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">05</text>
+<text x="367.4917296149582" y="547.2148356066126" font-size="12" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">EXECUTE</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#4fe3c9" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">EXECUTE</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">sign and send from bmo wallet</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">06 / 09</text>
+<animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.50000;0.61111" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<g><circle cx="256.4" cy="442.0" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="256.4" cy="442.0" r="38" fill="#3dff8c" opacity=".16"/><circle cx="256.4" cy="442.0" r="38" fill="none" stroke="#3dff8c" stroke-width="2.5" filter="url(#glow)"/><circle cx="256.4" cy="442.0" r="46" fill="none" stroke="#3dff8c" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.61111;0.72222" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="256.402614397699" y="437.5" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">06</text>
+<text x="256.402614397699" y="454.0" font-size="12" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">MANAGE</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#3dff8c" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">MANAGE</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">track position against plan</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">07 / 09</text>
+<animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.61111;0.72222" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<g><circle cx="231.2" cy="299.2" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="231.2" cy="299.2" r="38" fill="#3dff8c" opacity=".16"/><circle cx="231.2" cy="299.2" r="38" fill="none" stroke="#3dff8c" stroke-width="2.5" filter="url(#glow)"/><circle cx="231.2" cy="299.2" r="46" fill="none" stroke="#3dff8c" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.72222;0.83333" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="231.2207563614119" y="294.68658633461075" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">07</text>
+<text x="231.2207563614119" y="311.18658633461075" font-size="12" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">EXIT</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#3dff8c" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">EXIT</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">target. stop. or timeout</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">08 / 09</text>
+<animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.72222;0.83333" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<g><circle cx="303.7" cy="173.6" r="38" fill="#020a06" stroke="#136b3a" stroke-width="1.5"/><g opacity="0"><circle cx="303.7" cy="173.6" r="38" fill="#3dff8c" opacity=".16"/><circle cx="303.7" cy="173.6" r="38" fill="none" stroke="#3dff8c" stroke-width="2.5" filter="url(#glow)"/><circle cx="303.7" cy="173.6" r="46" fill="none" stroke="#3dff8c" stroke-width="1" opacity=".5"/><animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.83333;0.94444" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g><text x="303.72902674645366" y="169.0985780587767" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="1">08</text>
+<text x="303.72902674645366" y="185.5985780587767" font-size="12" fill="#3dff8c" text-anchor="middle" letter-spacing="1" font-weight="700">REPEAT</text>
+</g>
+<g opacity="0"><text x="440" y="328" font-size="30" fill="#3dff8c" text-anchor="middle" letter-spacing="4" font-weight="700" filter="url(#glow)">REPEAT</text>
+<text x="440" y="356" font-size="11" fill="#22b863" text-anchor="middle">write memory. return to scan</text>
+<text x="440" y="388" font-size="11" fill="#136b3a" text-anchor="middle" letter-spacing="3">09 / 09</text>
+<animate attributeName="opacity" values="0;1;0" keyTimes="0.00000;0.83333;0.94444" dur="13.5s" calcMode="discrete" repeatCount="indefinite"/></g>
+<path id="ring" d="M440,124 A212,212 0 0 1 440,548 A212,212 0 0 1 440,124" fill="none"/><circle r="5" fill="#e6fff0" filter="url(#glowbig)"><animateMotion dur="13.5s" repeatCount="indefinite"><mpath href="#ring"/></animateMotion></circle>
+<rect x="360" y="406" width="160" height="3" fill="#0b3a21"/><rect x="360" y="406" width="0" height="3" fill="#22b863"><animate attributeName="width" values="0;160" dur="13.5s" repeatCount="indefinite"/></rect>
+<text x="440" y="426" font-size="9" fill="#136b3a" text-anchor="middle" letter-spacing="3">ONE CYCLE</text>
+<text x="24" y="648" font-size="10.5" fill="#136b3a">shown at 1.5 s per state. real cadence is set by strategy and market.</text>
+<text x="856" y="648" font-size="10.5" fill="#22b863" text-anchor="end" letter-spacing="2">no terminal state</text>
+<rect width="880" height="668" rx="14" fill="url(#scan)" pointer-events="none"/>
+<rect width="880" height="668" rx="14" fill="url(#vig)" pointer-events="none"/>
+<rect x="1" y="1" width="878" height="666" rx="13" fill="none" stroke="#136b3a" stroke-width="1.5"/>
+</svg>
