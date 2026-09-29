@@ -5,9 +5,7 @@
 <br>
 <br>
 
-<sub>WALLET</sub>
-<br>
-<code>bmoPFnjLBAFq6Gqau8RE4PNMAzYLw6GT5cNBudnJEmf</code>
+
 <br>
 <sub>
 <a href="https://solscan.io/account/bmoPFnjLBAFq6Gqau8RE4PNMAzYLw6GT5cNBudnJEmf">SOLSCAN</a>
@@ -23,7 +21,7 @@
 
 <br>
 
-<img src="assets/agent-bmo.png" align="right" width="200" alt="Agent BMO">
+<img src="assets/agentbmo.png" align="right" width="200" alt="Agent BMO">
 
 ### BMO is the trader.
 
